@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link crossorigin="anonymous" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" rel="stylesheet"/>
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" rel="stylesheet">
+
+    <title> {% block title%}
+        {% endblock %}
+    </title>
+    <style>
+        .bd-orange-400{
+
+        background-color:#FF7700;
+
+     }
+     .a{
+      color:black;
+      font-size:80;
+      margin-left:20px;
+      font-weight: bold;
+     }
+body, html {
+font-family: "Times New Roman", Times, serif;
+  height: 100%;
+  margin: 0;
+   overflow-y: hidden;
+
+}
+.bgg {
+
+  background-image: url("{% static 'farmblog/images/bg_img.jpg'%}");
+font-weight: bold;
+
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.crd{
+ display: block;
+    margin-left: auto;
+    margin-right: auto }
+.scroll {
+
+
+  width: 100%;
+  height: 540px;
+  overflow: scroll;
+
+
+}
+
+    </style>
+
+</head>
+<body>
+{% load static %}
+<body class="bgg">
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bd-orange-400"
+     style="position:fixed; width:100%; top:0px; left:0px; z-index:1; margin-bottom:60px;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'dashboard' %}" style="font-weight: bold;color:white;">Our Blog Point</a>
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler" data-bs-target="#navbarSupportedContent"
+                data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="a" href="{% url 'home' %}">View Posts</a>
+                </li>
+                {% if cat_menu %}
+                <li class="nav-item dropdown">
+                    <a aria-expanded="false" class=" dropdown-toggle a" data-bs-toggle="dropdown" href="#"
+                       role="button">
+                        Category
+                    </a>
+                    <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
+                        {% for item in cat_menu %}
+                        <li><a class="dropdown-item a" href="{% url 'category' item|slugify %}">{{item}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="a" href="{% url 'category-list' %}">Categories</a>
+                </li>
+
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="a" href="{% url 'add_post' %}">Add Post</a>
+                </li>
+                <li class="nav-item">
+                    <a class="a" href="{% url 'add_category' %}">Add Category</a>
+                </li>
+                {% endif %}
+
+
+            </ul>
+
+            {% if user.is_authenticated %}
+
+            Welcome {{ user.first_name }} {{ user.last_name }}
+            {% if user.profile.profile_pic.url %}
+            <img src="{{ user.profile.profile_pic.url }}" height="50px" width="50px" style="border-radius: 50%; margin-left:10px; margin-right:10px" ;>
+             {% endif %}
+            <div class="nav-item dropdown">
+                <a aria-expanded="false" class="nav-link dropdown-toggle a" data-bs-toggle="dropdown" href="#"
+                   id="navbarDropdown" role="button">
+                    <span class="fa fa-user-circle  fa-2x" style="color:black;">
+
+                           </span>
+
+                </a>
+                <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
+                    <li><a class=" dropdown-item" href="{% url 'edit_profile' %}">Change Account Setting</a></li>
+                    {% if user.profile %}
+                    <li><a class=" dropdown-item" href="{% url 'edit_profile_page' user.profile.id %}">Edit
+                        Profile</a></li>
+                    <li><a class=" dropdown-item" href="{% url 'show_profile_page' user.profile.id %}">See your
+                        Profile</a></li>
+                    {%else%}
+
+                    <li><a class=" dropdown-item" href="{% url 'create_profile_page'%}">Create Your Profile</a></li>
+                    {% endif %}
+
+                </ul>
+            </div>
+
+            <div class="nav-item">
+                <a class="nav-link a" href="{% url 'logout' %}">
+                    <span class="fa fa-sign-out-alt  fa-2x" style="color:black;">
+
+                           </span></a><!-- logout screen reference -->
+            </div>
+            {% else %}
+            <div style="margin-right:12px;">
+                <a class="a" href="{% url 'register' %}"><!-- Register screen reference -->
+                    <span class="fa fa-user-plus  fa-2x" style="color:black;">
+
+                           </span>
+                </a>
+
+            </div>
+
+            <div>
+
+                <a class="a" href="{% url 'login' %}"><!-- login screen reference -->
+                    <span class="fa fa-sign-in-alt  fa-2x " style="color:black;">
+
+                           </span>
+                </a>
+
+            </div>
+            {% endif %}
+
+
+        </div>
+    </div>
+</nav>
+<div class="bg">
+    <div style="height:30px; width:100%;"></div>
+    <div class="container mt-5">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script crossorigin="anonymous"
+            integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    -->
+</div>
+</body>
+</body>
+</html>

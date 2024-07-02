@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}  Profile page !!{%endblock%}
+{% block content %}
+<div class="scroll">
+{% if user.is_authenticated %}
+<h1>
+    Profile page !!!
+</h1>
+welcome :{{ user.first_name}}
+
+    <form method="POST" enctype="multipart/form-data">
+        <div class="from_control">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        <button class="btn btn-primary">Profile page</button>
+   </div>
+
+
+    </form>
+
+
+{% else %}
+
+You are not logined!!!
+{% endif %}
+</div>
+{% endblock %}

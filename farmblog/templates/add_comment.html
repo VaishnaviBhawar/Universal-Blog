@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}  do comment !!{%endblock%}
+{% block content %}
+<div class="scroll">
+<h1>
+    do comment  {{ user.first_name}}
+</h1>
+
+    <form method="POST">
+        <div class="from_control">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        <button class="btn btn-primary">Add comment</button>
+   </div>
+<script>
+      var name =" {{ user.first_name}} _{{ user.last_name}}";
+      document.getElementById("elder").value=name;
+  </script>
+    </form>
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}  Delete a Blog Post !!{%endblock%}
+{% block content %}
+<div class="scroll">
+{% if user.is_authenticated %}
+{% if user.id == post.author.id %}
+<h1 style="color:#ff0000">
+    Are you sure to Delete a Post !!!
+</h1>
+<br><br>
+<div class="form_control">
+    <h1> {{post.title}}</h1>
+     {{ post.author.first_name }}
+        {{ post.author.last_name }}|
+        {{ post.post_date }}|
+        {{ post.post_time }}
+    <form method="POST">
+        {% csrf_token %}
+
+        <button class="btn btn-primary">Delete Post</button>
+    </form>
+</div>
+{% endif %}
+{% else %}
+
+You are not logined!!!
+{% endif %}
+</div>
+{% endblock %}

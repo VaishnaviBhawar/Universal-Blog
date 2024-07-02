@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}  Edit  profile!!{%endblock%}
+{% block content %}
+<div class="scroll">
+{% if user.is_authenticated %}
+
+{% if user.id == profile.user.id %}
+<h1>
+    Edit your profile !!!
+</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <div class="from_control">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        <button class="btn btn-primary">Update profile</button>
+   </div>
+
+    </form>
+
+{% endif %}
+{% else %}
+
+You are not logined!!!
+{% endif %}
+</div>
+{% endblock %}
